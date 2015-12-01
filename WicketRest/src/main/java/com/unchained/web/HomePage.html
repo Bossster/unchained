@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Wicket Rest</title>
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="css/styles.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body class="en">
+	<header class="header">
+		<div class="container">
+			<div class="row col-md-12">
+				<img class="img-responsive center-block logo" src="img/resteasy_logo.png" alt="logo">
+			</div>
+			<div class="lang-switcher">
+				<span><a id="en" href="#">EN</a></span>
+				<span><a id="de" href="#">DE</a></span>
+				<span><a id="sk" href="#">SK</a></span>
+			</div>
+		</div>
+	</header>
+	<section class="section">
+		<div class="container">
+			<h1 class="row text-center" lang="en">Articles</h1>
+			<h1 class="row text-center" lang="de">Artikel</h1>
+			<h1 class="row text-center" lang="sk">Odstavce</h1>
+			<hr>
+			<div class="article-controls">
+				<button class="btn btn-success">Add/Update</button>
+				<button class="btn btn-warning">Reset</button>
+			</div>
+			<hr>
+			<div class="row articles loading"></div>
+		</div>
+	</section>
+	<footer class="footer">
+		<div class="container">
+			<div class="row col-xs-6">
+				<p class="text-muted text-left">Copyright 2015 Unchained s.r.o.</p>
+			</div>
+			<div class="col-xs-6">
+				<p class="text-muted text-right">Wicket version: <span wicket:id="wicketVersion">version</span></p>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript">
+		$('#en').click(function() {
+			document.body.className = 'en';
+		});
+		$('#de').click(function() {
+			document.body.className = 'de';
+		});
+		$('#sk').click(function() {
+			document.body.className = 'sk';
+		});
+		$(document).ready(function() {
+			console.log('GET/posts?userId=1');
+			var root = 'http://jsonplaceholder.typicode.com';
+			$.ajax({
+				url: root + '/posts?userId=1',
+				method: 'GET'
+			}).then(function(data) {
+				var result = JSON.stringify(data, null, '\t');
+				console.log(result);
+				$('.articles').removeClass('loading');
+				$.each(data, function(i, item) {
+					var title = item.title;
+					var body = item.body;
+					$('.articles').append('<article class="col-md-12 article">'
+					+ ('<h3>' + title + '</h3>')
+					+ ('<p>' + body + '</p>')
+					+ ('</article>'));
+				});
+			});
+		});
+	</script>
+</body>
+</html>
