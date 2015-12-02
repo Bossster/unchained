@@ -19,13 +19,13 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	}
 
 	@Override
-	protected Filter[] getServletFilters() {
-		return new Filter[] { new AppFilter() };
-	}
-	
-	@Override
 	protected String[] getServletMappings() {
 		return new String[] { "/rest/*" };
 	}
-	
+
+	@Override
+	protected Filter[] getServletFilters() {
+		return new Filter[] { new AppFilter() };
+	}
+
 }
