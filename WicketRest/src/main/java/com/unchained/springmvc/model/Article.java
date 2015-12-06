@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Article {
 	
-	private String id;
+	private Long id;
 	
 	private String title;
 	
@@ -16,14 +16,14 @@ public class Article {
 		super();
 	}
 	
-	public Article(String id, String title, String body) {
+	public Article(Long id, String title, String body) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 	}
 
 	@XmlElement
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -39,7 +39,7 @@ public class Article {
 	
 	@Override
 	public String toString() {
-		return "Article " + id + " " + title + " " + body;
+		return "Article:[" + id + "," + title + "," + body + "]";
 	}
 
 }

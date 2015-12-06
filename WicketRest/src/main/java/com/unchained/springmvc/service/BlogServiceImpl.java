@@ -14,23 +14,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.unchained.springmvc.model.Article;
 import com.unchained.springmvc.model.Message;
 
 @Service
 @Transactional
 public class BlogServiceImpl implements BlogService {
 	
-	private Map<String, String> entries = new HashMap<String, String>();
+	private Map<String, String> messages = new HashMap<String, String>();
+	
+	private Map<Long, Article> articles = new HashMap<Long, Article>();
+
+	private MessageSource messageSource;
 	
 	@Autowired
 	public BlogServiceImpl(MessageSource messageSource) {
-		entries.put("world", messageSource.getMessage("helloText", null, null));
+		this.messageSource = messageSource;
+		
+		initMessages();
+		initArticles();
+	}
+	
+	private void initMessages() {
+		messages.put("world", messageSource.getMessage("helloText", null, null));
+	}
+	
+	private void initArticles() {
+		articles.put(1L, new Article(1L, "title", "body"));
 	}
 
 	@Override
 	public List<Message> findAllHelloTexts() {
 		List<Message> result = new ArrayList<Message>();
-		Set<Entry<String, String>> entrySet = entries.entrySet();
+		Set<Entry<String, String>> entrySet = messages.entrySet();
 		for (Entry<String, String> entry : entrySet) {
 			result.add(new Message(entry.getKey(), entry.getValue()));
 		}
@@ -39,7 +55,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public String findHelloText(String key) {
-		String result = entries.get(key);
+		String result = messages.get(key);
 		if (StringUtils.isEmpty(result)) {
 			return result;
 		}
@@ -48,10 +64,10 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public boolean helloTextExists(String key, String text) {
-		if (entries.get(key) != null) {
+		if (messages.get(key) != null) {
 			return true;
 		}
-		Collection<String> values = entries.values();
+		Collection<String> values = messages.values();
 		if (values.contains(text)) {
 			return true;
 		}
@@ -60,12 +76,12 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public void updateHelloText(String key, String text) {
-		entries.put(key, text);
+		messages.put(key, text);
 	}
 
 	@Override
 	public void deleteHelloText(String key) {
-		entries.remove(key);
+		messages.remove(key);
 	}
 
 }
