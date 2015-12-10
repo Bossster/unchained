@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.unchained.springmvc.dao.BusDao;
 import com.unchained.springmvc.model.Bus;
@@ -19,11 +20,17 @@ public class BusServiceImpl implements BusService {
 
 	@Override
 	public Bus findBusById(Long id) {
+		if (id == null) {
+			return null;
+		}
 		return busDao.findById(id);
 	}
 
 	@Override
 	public Bus findBusByBusType(String busType) {
+		if (StringUtils.isEmpty(busType)) {
+			return null;
+		}
 		return busDao.findByBusType(busType);
 	}
 
