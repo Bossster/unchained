@@ -39,7 +39,7 @@ public class ResourceController {
 		return message;
 	}
 
-	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	@RequestMapping(value = "/hello", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Message>> getHello() {
 		List<Message> messages = blogService.findAllHelloTexts();
 		LOG.info(messages);

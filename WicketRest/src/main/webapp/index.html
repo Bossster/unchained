@@ -24,8 +24,9 @@
 	<section class="section">
 		<div class="container">
 			<h1 class="angular-title text-left"></h1>
-		    <label>Name: </label><input class="form-control" type="text" ng-model="name" placeholder="Enter your name here"/>
-		    <h1>Hey {{name}}</h1>
+			<hr>
+			<h2 class="text-left">Buses</h2>
+			<div class="row buses loading"></div>
     	</div>
     </section>
 	<footer class="footer">
@@ -46,6 +47,24 @@
 			$.get('templates/template.mst', function(template) {
 				var rendered = Mustache.render(template, {name: 'Martin'});
 			    $('.angular-title').html(rendered);
+			});
+			
+			console.log('GET/buslist');
+			var root = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				url: root + '/buslist',
+				method: 'GET'
+			}).then(function(data) {
+				$('.buses').removeClass('loading');
+				$('.buses').empty();
+				$.each(data, function(i, item) {
+					var busType = '(' + item.id + ') ' + item.busType;
+					var seatCount = item.seatCount;
+					$('.buses').append('<article class="col-md-12 article">'
+					+ ('<h4 class="article-title">' + busType + '</h4>')
+					+ ('<p>Seats: ' + seatCount + '</p>')
+					+ ('</article>'));
+				});
 			});
 		});
     </script>

@@ -17,8 +17,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.2.3.RELEASE</spring.version>
-		<hibernate.version>5.0.4.Final</hibernate.version>
-		<validator.version>5.2.2.Final</validator.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
+		<validator.version>4.3.2.Final</validator.version>
 		<wicket.version>7.1.0</wicket.version>
 		<jetty.version>9.3.6.v20151106</jetty.version>
 		<log4j.version>2.4.1</log4j.version>
@@ -71,6 +71,13 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${validator.version}</version>
+		</dependency>
+
+		<!-- ORACLE -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0</version>
 		</dependency>
 
 		<!-- JSP -->
@@ -224,6 +231,26 @@
 					<downloadSources>true</downloadSources>
 					<wtpversion>none</wtpversion>
 				</configuration>
+			</plugin>
+			<!-- HIBERNATE PLUGIN -->
+			<plugin>
+				<groupId>de.juplo</groupId>
+				<artifactId>hibernate4-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<executions>
+					<execution>
+						<id>oracle</id>
+						<goals>
+							<goal>export</goal>
+						</goals>
+						<configuration>
+							<hibernateDialect>org.hibernate.dialect.Oracle10gDialect</hibernateDialect>
+							<outputFile>schemas/oracle-schema.sql</outputFile>
+							<target>SCRIPT</target>
+							<type>BOTH</type>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

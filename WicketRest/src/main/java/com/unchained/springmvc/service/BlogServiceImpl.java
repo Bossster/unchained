@@ -17,7 +17,7 @@ import org.springframework.util.StringUtils;
 import com.unchained.springmvc.model.Article;
 import com.unchained.springmvc.model.Message;
 
-@Service
+@Service("blogService")
 @Transactional
 public class BlogServiceImpl implements BlogService {
 	
