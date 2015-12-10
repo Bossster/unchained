@@ -27,6 +27,9 @@
 			<hr>
 			<h2 class="text-left">Buses</h2>
 			<div class="row buses loading"></div>
+			<hr>
+			<h2 class="text-left">Reservations</h2>
+			<div class="row reservations loading"></div>
     	</div>
     </section>
 	<footer class="footer">
@@ -50,21 +53,43 @@
 			});
 			
 			console.log('GET/buslist');
-			var root = 'http://localhost:8888/WicketRest/rest';
+			var rootBus = 'http://localhost:8888/WicketRest/rest';
 			$.ajax({
-				url: root + '/buslist',
+				url: rootBus + '/buslist',
 				method: 'GET'
 			}).then(function(data) {
 				$('.buses').removeClass('loading');
 				$('.buses').empty();
-				$.each(data, function(i, item) {
-					var busType = '(' + item.id + ') ' + item.busType;
-					var seatCount = item.seatCount;
-					$('.buses').append('<article class="col-md-12 article">'
-					+ ('<h4 class="article-title">' + busType + '</h4>')
-					+ ('<p>Seats: ' + seatCount + '</p>')
-					+ ('</article>'));
-				});
+				if (data) {
+					$.each(data, function(i, item) {
+						var busType = '(' + item.id + ') ' + item.busType;
+						var seatCount = item.seatCount;
+						$('.buses').append('<article class="col-md-12 article">'
+						+ ('<h4 class="article-title">' + busType + '</h4>')
+						+ ('<p>Seats: ' + seatCount + '</p>')
+						+ ('</article>'));
+					});
+				}
+			});
+			
+			console.log('GET/reservationlist');
+			var rootReservation = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				url: rootReservation + '/reservationlist',
+				method: 'GET'
+			}).then(function(data) {
+				$('.reservations').removeClass('loading');
+				$('.reservations').empty();
+				if (data) {
+					$.each(data, function(i, item) {
+						var reservationId = '(' + item.id + ') ' + item.reservationId;
+						var tripId = item.tripId;
+						$('.reservations').append('<article class="col-md-12 article">'
+						+ ('<h4 class="article-title">' + reservationId + '</h4>')
+						+ ('<p>TripID: ' + tripId + '</p>')
+						+ ('</article>'));
+					});
+				}
 			});
 		});
     </script>

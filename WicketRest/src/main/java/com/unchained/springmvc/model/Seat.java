@@ -49,6 +49,16 @@ public class Seat {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 
 	@Override
 	public String toString() {
