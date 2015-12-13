@@ -1,0 +1,22 @@
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-1">ID</th>
+        <th class="col-xs-1">Date</th>
+        <th class="col-xs-1">Reservation Id</th>
+        <th class="col-xs-1">Trip Id</th>
+        <th class="col-xs-1">Bus type</th>
+      </tr>
+    </thead>
+    <tbody>
+   	  {{#.}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{reservationDate}}</td>
+        <td>{{reservationId}}</td>
+        <td>{{tripId}}</td>
+        <td>{{bus.busType}}</td>
+      </tr>
+      {{/.}}
+    </tbody>
+</table>

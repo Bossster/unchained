@@ -49,7 +49,8 @@ public class BusServiceImpl implements BusService {
 		Bus found = busDao.findById(bus.getId());
 		if (found != null) {
 			found.setBusType(bus.getBusType());
-			found.setSeatCount(bus.getSeatCount());
+			found.setMaxSeats(bus.getMaxSeats());
+			found.setMaxBikes(bus.getMaxBikes());
 		}
 	}
 

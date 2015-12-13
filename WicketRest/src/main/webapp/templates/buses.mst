@@ -1,0 +1,20 @@
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-1">ID</th>
+        <th class="col-xs-1">Bus type</th>
+        <th class="col-xs-1">Max seats</th>
+        <th class="col-xs-2">Max bikes</th>
+      </tr>
+    </thead>
+    <tbody>
+   	  {{#.}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{busType}}</td>
+        <td>{{maxSeats}}</td>
+        <td>{{maxBikes}}</td>
+      </tr>
+      {{/.}}
+    </tbody>
+</table>

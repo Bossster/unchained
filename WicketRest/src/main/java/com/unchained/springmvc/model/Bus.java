@@ -6,9 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "HR.BUS")
+@Table(name = "HR.BUS", uniqueConstraints = { @UniqueConstraint(columnNames = "BUS_TYPE") })
 public class Bus {
 
 	@Id
@@ -18,9 +19,12 @@ public class Bus {
 
 	@Column(name = "BUS_TYPE", length = 20, unique = true, nullable = false)
 	private String busType = "DEFAULT";
-	
-	@Column(name = "SEAT_COUNT", length = 20, nullable = false)
-	private Integer seatCount = 10;
+
+	@Column(name = "MAX_SEATS", length = 20, nullable = false)
+	private Integer maxSeats = 1;
+
+	@Column(name = "MAX_BIKES", length = 20, nullable = false)
+	private Integer maxBikes = 1;
 
 	public Long getId() {
 		return id;
@@ -37,20 +41,28 @@ public class Bus {
 	public void setBusType(String busType) {
 		this.busType = busType;
 	}
-	
-	public Integer getSeatCount() {
-		return seatCount;
+
+	public Integer getMaxSeats() {
+		return maxSeats;
 	}
 
-	public void setSeatCount(Integer seatCount) {
-		this.seatCount = seatCount;
+	public void setMaxSeats(Integer maxSeats) {
+		this.maxSeats = maxSeats;
 	}
-	
+
+	public Integer getMaxBikes() {
+		return maxBikes;
+	}
+
+	public void setMaxBikes(Integer maxBikes) {
+		this.maxBikes = maxBikes;
+	}
+
 	@Override
 	public int hashCode() {
 		return super.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		return super.equals(obj);
@@ -58,7 +70,7 @@ public class Bus {
 
 	@Override
 	public String toString() {
-		return "Bus:[" + id + "," + busType + "," + seatCount + "]";
+		return "Bus:[" + id + ", " + busType + ", " + maxSeats + ", " + maxBikes + "]";
 	}
 
 }

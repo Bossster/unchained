@@ -20,6 +20,7 @@ body:not(.sk) :lang(sk) {
 
 .logo {
 	padding-top: 20px;
+	width: 250px;
 }
 
 .footer {

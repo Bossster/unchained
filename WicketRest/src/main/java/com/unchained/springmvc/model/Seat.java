@@ -62,7 +62,7 @@ public class Seat {
 
 	@Override
 	public String toString() {
-		return "Seat:[" + id + "," + seatNumber + "]";
+		return "Seat:[" + id + ", " + seatNumber + "]";
 	}
 
 }
