@@ -1,10 +1,12 @@
 package com.unchained.springmvc.model;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Article {
+public class Article implements Serializable {
 	
 	private Long id;
 	

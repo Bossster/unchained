@@ -1,23 +1,23 @@
 <table class="table table-hover">
     <thead>
       <tr>
-        <th class="col-xs-1">Reservation Id</th>
         <th class="col-xs-1">Trip Id</th>
         <th class="col-xs-1">Date from / to</th>
         <th class="col-xs-1">From / to</th>
-        <th class="col-xs-1">Seats</th>
         <th class="col-xs-1">Price</th>
+        <th class="col-xs-1">Total price</th>
+        <th class="col-xs-1">Available seats</th>
       </tr>
     </thead>
     <tbody>
    	  {{#.}}
       <tr>
-        <td>{{reservationId}}</td>
-        <td>{{trip.tripId}}</td>
-        <td>{{trip.tripDateFrom}} / {{trip.tripDateTo}}</td>
-        <td>{{trip.tripFrom}} / {{trip.tripTo}}</td>
-        <td>{{reservationSeats}}</td>
-        <td>{{reservationPrice}}</td>
+        <td>{{tripId}}</td>
+        <td>{{tripDateFrom}} / {{tripDateTo}}</td>
+        <td>{{tripFrom}} / {{tripTo}}</td>
+        <td>{{tripPrice}}</td>
+        <td>{{tripTotalPrice}}</td>
+        <td>{{tripAvailableSeats}}</td>
       </tr>
       {{/.}}
     </tbody>

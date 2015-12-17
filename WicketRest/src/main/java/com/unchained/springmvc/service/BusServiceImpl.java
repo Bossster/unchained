@@ -50,7 +50,6 @@ public class BusServiceImpl implements BusService {
 		if (found != null) {
 			found.setBusType(bus.getBusType());
 			found.setMaxSeats(bus.getMaxSeats());
-			found.setMaxBikes(bus.getMaxBikes());
 		}
 	}
 

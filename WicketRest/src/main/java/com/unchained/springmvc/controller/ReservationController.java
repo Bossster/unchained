@@ -1,5 +1,6 @@
 package com.unchained.springmvc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.core.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.unchained.springmvc.model.Reservation;
+import com.unchained.springmvc.model.ReservationFilter;
 import com.unchained.springmvc.service.ReservationService;
 
 @RestController
@@ -32,13 +34,17 @@ public class ReservationController {
 	MessageSource messageSource;
 
 	@RequestMapping(value = "/reservationlist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Reservation>> listReservations() {
+	public ResponseEntity<List<ReservationFilter>> listReservations() {
 		List<Reservation> reservations = reservationService.findAllReservations();
-		LOG.info(reservations);
 		if (reservations.isEmpty()) {
-			return new ResponseEntity<List<Reservation>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<ReservationFilter>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
+		List<ReservationFilter> reservationList = new ArrayList<ReservationFilter>();
+		for (Reservation reservation : reservations) {
+			reservationList.add(new ReservationFilter(reservation));
+		}
+		LOG.info(reservationList);
+		return new ResponseEntity<List<ReservationFilter>>(reservationList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

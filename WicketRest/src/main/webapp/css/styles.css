@@ -15,12 +15,32 @@ body:not(.sk) :lang(sk) {
 	position: absolute;
 	top: 0;
 	right: 0;
-	margin: 2px;
+	margin: 4px;
+}
+
+.en-icon {
+	background-image: url("../img/United-Kingdom-Flag.png");
+	background-repeat: no-repeat;
+	padding-left: 26px;
+	line-height: 24px;
+	display: inline-block;
+}
+
+.de-icon {
+	background-image: url("../img/Germany-Flag.png");
+	background-repeat: no-repeat;
+	padding-left: 26px;
+	line-height: 24px;
+	display: inline-block;
 }
 
 .logo {
-	padding-top: 20px;
+	padding-top: 30px;
 	width: 250px;
+}
+
+.logo-link {
+	display: table;
 }
 
 .footer {

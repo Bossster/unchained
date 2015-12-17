@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.unchained.springmvc")
+@ComponentScan(basePackages = "com.unchained.springmvc.service")
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfiguration {
 

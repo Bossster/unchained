@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html ng-app="angularApp">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bookings</title>
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+	<link href="css/styles.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/mustache.min.js"></script>
+</head>
+<body class="en">
+	<header class="header">
+		<div class="container">
+			<div class="row col-md-12">
+				<a class="center-block logo-link" href="http://www.oebb.at" target="_blank"><img class="img-responsive logo" src="img/OBB_logo.png" alt="logo"></a>
+				<h2 class="text-center" lang="en">Bookings</h2>
+				<h2 class="text-center" lang="de">Buchungen</h2>
+			</div>
+			<div class="lang-switcher">
+				<span><a id="en" href="#"><span class="en-icon">EN</span></a></span>
+				<span><a id="de" href="#"><span class="de-icon">DE</span></a></span>
+			</div>
+		</div>
+	</header>
+	<section class="section">
+		<div class="container">
+			<h2 class="text-left" lang="en">Search</h2>
+			<h2 class="text-left" lang="de">Suchen</h2>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="search-from" lang="en">From</label>
+					<label class="control-label col-sm-2" for="search-from" lang="de">Von</label>
+					<div class="col-sm-10">
+						<input id="search-from" type="text" class="form-control" placeholder="Enter departure location">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="search-to" lang="en">To</label>
+					<label class="control-label col-sm-2" for="search-to" lang="de">Nach</label>
+					<div class="col-sm-10">
+						<input id="search-to" type="text" class="form-control" placeholder="Enter destination location">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="search-date" lang="en">Date</label>
+					<label class="control-label col-sm-2" for="search-date" lang="de">Datum</label>
+					<div class="col-sm-10">
+						<input id="search-date" type="text" class="form-control datepicker" placeholder="Enter departure date">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="search-seats" lang="en">Seats</label>
+					<label class="control-label col-sm-2" for="search-seats" lang="de">Sitze</label>
+					<div class="col-sm-10">
+						<input id="search-seats" type="text" class="form-control" placeholder="Enter number of seats">
+					</div>
+				</div>
+				<div class="article-controls text-right">
+					<button type="submit" class="btn btn-success" lang="en">Search</button>
+					<button type="submit" class="btn btn-success" lang="de">Suchen</button>
+					<button type="reset" class="btn btn-warning" lang="en">Reset</button>
+					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
+				</div>
+			</form>
+			<hr>
+			<div class="search loading"></div>
+			<hr>
+			<h2 class="text-left" lang="en">Reservations</h2>
+			<h2 class="text-left" lang="de">Reservierungen</h2>
+			<div class="reservations loading"></div>
+			<hr>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="reservation-id" lang="en">Reservation Id</label>
+					<label class="control-label col-sm-2" for="reservation-id" lang="de">Reservierung Id</label>
+					<div class="col-sm-10">
+						<input id="reservation-id" type="text" class="form-control" placeholder="Empty for new reservations">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="reservation-trip" lang="en">Trip Id</label>
+					<label class="control-label col-sm-2" for="reservation-trip" lang="de">Fahrt Id</label>
+					<div class="col-sm-10">
+						<input id="reservation-trip" type="text" class="form-control" placeholder="Enter trip id">
+					</div>
+				</div>
+				<div class="article-controls text-right">
+					<button type="submit" class="btn btn-success" lang="en">Book</button>
+					<button type="submit" class="btn btn-success" lang="de">Buchen</button>
+					<button type="submit" class="btn btn-danger" lang="en">Cancel</button>
+					<button type="submit" class="btn btn-danger" lang="de">Stornieren</button>
+					<button type="reset" class="btn btn-warning" lang="en">Reset</button>
+					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
+				</div>
+			</form>
+    	</div>
+    </section>
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<p class="text-muted text-left">Copyright 2015 Unchained s.r.o.</p>
+				</div>
+				<div class="col-xs-6">
+					<p class="text-muted text-right">Angular version: <span>{{1}}.{{2 + 2}}.{{4 + 4}}</span></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+    <script type="text/javascript">
+    	angular.module('angularApp', []);
+		$('#en').click(function() {
+			document.body.className = 'en';
+		});
+		$('#de').click(function() {
+			document.body.className = 'de';
+		});
+		$('.datepicker').datepicker();
+		$('.datepicker').datepicker('option', 'dateFormat', 'dd/mm/yy');
+		$(document).ready(function() {
+			console.log('GET/triplist');
+			var rootSearch = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				url: rootSearch + '/triplist',
+				method: 'GET'
+			}).then(function(data) {
+				console.log('Rendering trips');
+				$.get('templates/search.mst', function(template) {
+					var rendered = Mustache.render(template, data);
+					$('.search').removeClass('loading');
+				    $('.search').html(rendered);
+				});
+			});
+			console.log('GET/reservationlist');
+			var rootReservation = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				url: rootReservation + '/reservationlist',
+				method: 'GET'
+			}).then(function(data) {
+				console.log('Rendering reservations');
+				$.get('templates/reservations.mst', function(template) {
+					var rendered = Mustache.render(template, data);
+					$('.reservations').removeClass('loading');
+				    $('.reservations').html(rendered);
+				});
+			});
+		});
+    </script>
+</body>
+</html>

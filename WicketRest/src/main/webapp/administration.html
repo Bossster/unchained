@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html ng-app="angularApp">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Administration</title>
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+	<link href="css/styles.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/mustache.min.js"></script>
+</head>
+<body class="en">
+	<header class="header">
+		<div class="container">
+			<div class="row col-md-12">
+				<a class="center-block logo-link" href="http://www.oebb.at" target="_blank"><img class="img-responsive logo" src="img/OBB_logo.png" alt="logo"></a>
+				<h2 class="text-center" lang="en">Administration</h2>
+				<h2 class="text-center" lang="de">Administration</h2>
+			</div>
+			<div class="lang-switcher">
+				<span><a id="en" href="#"><span class="en-icon">EN</span></a></span>
+				<span><a id="de" href="#"><span class="de-icon">DE</span></a></span>
+			</div>
+		</div>
+	</header>
+	<section class="section">
+		<div class="container">
+			<h2 class="text-left" lang="en">Buses</h2>
+			<h2 class="text-left" lang="de">Busse</h2>
+			<div class="buses loading"></div>
+			<hr>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="bus-id">Id</label>
+					<div class="col-sm-10">
+						<input id="bus-id" type="text" class="form-control" placeholder="Empty for new entries">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="bus-type" lang="en">Bus type</label>
+					<label class="control-label col-sm-2" for="bus-type" lang="de">Bus type</label>
+					<div class="col-sm-10">
+						<input id="bus-type" type="text" class="form-control" placeholder="Enter unique bus type">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="max-seats" lang="en">Max seats</label>
+					<label class="control-label col-sm-2" for="max-seats" lang="de">Max seats</label>
+					<div class="col-sm-10">
+						<input id="max-seats" type="text" class="form-control" placeholder="Enter seat capacity">
+					</div>
+				</div>
+				<div class="article-controls text-right">
+					<button type="submit" class="btn btn-success" lang="en">Add / Update</button>
+					<button type="submit" class="btn btn-success" lang="de">Add / Update</button>
+					<button type="submit" class="btn btn-danger" lang="en">Delete</button>
+					<button type="submit" class="btn btn-danger" lang="de">Delete</button>
+					<button type="reset" class="btn btn-warning" lang="en">Reset</button>
+					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
+				</div>
+			</form>
+			<hr>
+			<h2 class="text-left" lang="en">Trips</h2>
+			<h2 class="text-left" lang="de">Fahrten</h2>
+			<div class="trips loading"></div>
+			<hr>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="trip-id">Id</label>
+					<div class="col-sm-10">
+						<input id="trip-id" type="text" class="form-control" placeholder="Empty for new entries">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="trip-trip-id" lang="en">Trip Id</label>
+					<label class="control-label col-sm-2" for="trip-trip-id" lang="de">Trip Id</label>
+					<div class="col-sm-10">
+						<input id="trip-trip-id" type="text" class="form-control" placeholder="Enter trip id">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="trip-bus-type" lang="en">Bus type</label>
+					<label class="control-label col-sm-2" for="trip-bus-type" lang="de">Bus type</label>
+					<div class="col-sm-10">
+						<input id="trip-bus-type" type="text" class="form-control" placeholder="Enter bus type">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="trip-date-from" lang="en">Date from</label>
+					<label class="control-label col-sm-2" for="trip-date-from" lang="de">Date from</label>
+					<div class="col-sm-10">
+						<input id="trip-date-from" type="text" class="form-control datepicker" placeholder="Enter departure date">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="trip-date-to" lang="en">Date to</label>
+					<label class="control-label col-sm-2" for="trip-date-to" lang="de">Date to</label>
+					<div class="col-sm-10">
+						<input id="trip-date-to" type="text" class="form-control datepicker" placeholder="Enter arrival date">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="trip-from" lang="en">From</label>
+					<label class="control-label col-sm-2" for="trip-from" lang="de">From</label>
+					<div class="col-sm-10">
+						<input id="trip-from" type="text" class="form-control" placeholder="Enter departure location">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="trip-to" lang="en">To</label>
+					<label class="control-label col-sm-2" for="trip-to" lang="de">To</label>
+					<div class="col-sm-10">
+						<input id="trip-to" type="text" class="form-control" placeholder="Enter arrival location">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="trip-price" lang="en">Price</label>
+					<label class="control-label col-sm-2" for="trip-price" lang="de">Price</label>
+					<div class="col-sm-10">
+						<input id="trip-price" type="text" class="form-control" placeholder="Enter trip price per person">
+					</div>
+				</div>
+				<div class="article-controls text-right">
+					<button type="submit" class="btn btn-success" lang="en">Add / Update</button>
+					<button type="submit" class="btn btn-success" lang="de">Add / Update</button>
+					<button type="submit" class="btn btn-danger" lang="en">Delete</button>
+					<button type="submit" class="btn btn-danger" lang="de">Delete</button>
+					<button type="reset" class="btn btn-warning" lang="en">Reset</button>
+					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
+				</div>
+			</form>
+    	</div>
+    </section>
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<p class="text-muted text-left">Copyright 2015 Unchained s.r.o.</p>
+				</div>
+				<div class="col-xs-6">
+					<p class="text-muted text-right">Angular version: <span>{{1}}.{{2 + 2}}.{{4 + 4}}</span></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+    <script type="text/javascript">
+    	angular.module('angularApp', []);
+		$('#en').click(function() {
+			document.body.className = 'en';
+		});
+		$('#de').click(function() {
+			document.body.className = 'de';
+		});
+		$('.datepicker').datepicker();
+		$('.datepicker').datepicker('option', 'dateFormat', 'dd/mm/yy');
+		$(document).ready(function() {
+			console.log('GET/buslist');
+			var rootBus = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				url: rootBus + '/buslist',
+				method: 'GET'
+			}).then(function(data) {
+				console.log('Rendering buses');
+				$.get('templates/buses.mst', function(template) {
+					var rendered = Mustache.render(template, data);
+					$('.buses').removeClass('loading');
+				    $('.buses').html(rendered);
+				});
+			});
+			console.log('GET/triplist');
+			var rootReservation = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				url: rootReservation + '/triplist',
+				method: 'GET'
+			}).then(function(data) {
+				console.log('Rendering trips');
+				$.get('templates/trips.mst', function(template) {
+					var rendered = Mustache.render(template, data);
+					$('.trips').removeClass('loading');
+				    $('.trips').html(rendered);
+				});
+			});
+		});
+    </script>
+</body>
+</html>

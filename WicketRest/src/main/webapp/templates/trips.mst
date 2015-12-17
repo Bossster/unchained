@@ -1,23 +1,25 @@
 <table class="table table-hover">
     <thead>
       <tr>
-        <th class="col-xs-1">Reservation Id</th>
+        <th class="col-xs-1">Id</th>
         <th class="col-xs-1">Trip Id</th>
+        <th class="col-xs-1">Bus type</th>
         <th class="col-xs-1">Date from / to</th>
         <th class="col-xs-1">From / to</th>
-        <th class="col-xs-1">Seats</th>
         <th class="col-xs-1">Price</th>
       </tr>
     </thead>
     <tbody>
    	  {{#.}}
       <tr>
-        <td>{{reservationId}}</td>
-        <td>{{trip.tripId}}</td>
-        <td>{{trip.tripDateFrom}} / {{trip.tripDateTo}}</td>
-        <td>{{trip.tripFrom}} / {{trip.tripTo}}</td>
-        <td>{{reservationSeats}}</td>
-        <td>{{reservationPrice}}</td>
+        <td>{{id}}</td>
+        <td>{{tripId}}</td>
+        <td>{{bus.busType}}</td>
+        <td>{{tripDateFrom}}</td>
+        <td>{{tripDateTo}}</td>
+        <td>{{tripFrom}}</td>
+        <td>{{tripTo}}</td>
+        <td>{{tripPrice}}</td>
       </tr>
       {{/.}}
     </tbody>

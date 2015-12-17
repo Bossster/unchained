@@ -1,5 +1,7 @@
 package com.unchained.springmvc.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,10 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "HR.SEAT")
-public class Seat {
+@XmlRootElement
+public class Seat implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -26,6 +31,7 @@ public class Seat {
 	@JoinColumn(name = "RESERVATION_ID")
 	private Reservation reservation;
 
+	@XmlElement
 	public Long getId() {
 		return id;
 	}
@@ -34,6 +40,7 @@ public class Seat {
 		this.id = id;
 	}
 
+	@XmlElement
 	public Integer getSeatNumber() {
 		return seatNumber;
 	}
@@ -42,6 +49,7 @@ public class Seat {
 		this.seatNumber = seatNumber;
 	}
 
+	@XmlElement
 	public Reservation getReservation() {
 		return reservation;
 	}

@@ -1,5 +1,6 @@
 package com.unchained.springmvc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.core.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.unchained.springmvc.model.Bus;
+import com.unchained.springmvc.model.BusFilter;
 import com.unchained.springmvc.service.BusService;
 
 @RestController
@@ -32,13 +34,17 @@ public class BusController {
 	MessageSource messageSource;
 
 	@RequestMapping(value = "/buslist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Bus>> listBuses() {
+	public ResponseEntity<List<BusFilter>> listBuses() {
 		List<Bus> buses = busService.findAllBuses();
-		LOG.info(buses);
 		if (buses.isEmpty()) {
-			return new ResponseEntity<List<Bus>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<BusFilter>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Bus>>(buses, HttpStatus.OK);
+		List<BusFilter> busList = new ArrayList<BusFilter>();
+		for (Bus bus : buses) {
+			busList.add(new BusFilter(bus));
+		}
+		LOG.info(busList);
+		return new ResponseEntity<List<BusFilter>>(busList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/bus/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

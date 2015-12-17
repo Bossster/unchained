@@ -1,5 +1,7 @@
 package com.unchained.springmvc.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,10 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "HR.BUS", uniqueConstraints = { @UniqueConstraint(columnNames = "BUS_TYPE") })
-public class Bus {
+@XmlRootElement
+public class Bus implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,9 +28,7 @@ public class Bus {
 	@Column(name = "MAX_SEATS", length = 20, nullable = false)
 	private Integer maxSeats = 1;
 
-	@Column(name = "MAX_BIKES", length = 20, nullable = false)
-	private Integer maxBikes = 1;
-
+	@XmlElement
 	public Long getId() {
 		return id;
 	}
@@ -34,6 +37,7 @@ public class Bus {
 		this.id = id;
 	}
 
+	@XmlElement
 	public String getBusType() {
 		return busType;
 	}
@@ -42,20 +46,13 @@ public class Bus {
 		this.busType = busType;
 	}
 
+	@XmlElement
 	public Integer getMaxSeats() {
 		return maxSeats;
 	}
 
 	public void setMaxSeats(Integer maxSeats) {
 		this.maxSeats = maxSeats;
-	}
-
-	public Integer getMaxBikes() {
-		return maxBikes;
-	}
-
-	public void setMaxBikes(Integer maxBikes) {
-		this.maxBikes = maxBikes;
 	}
 
 	@Override
@@ -70,7 +67,7 @@ public class Bus {
 
 	@Override
 	public String toString() {
-		return "Bus:[" + id + ", " + busType + ", " + maxSeats + ", " + maxBikes + "]";
+		return "Bus:[" + id + ", " + busType + ", " + maxSeats + "]";
 	}
 
 }
