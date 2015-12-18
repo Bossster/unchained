@@ -1,9 +1,7 @@
 package com.unchained.springmvc.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,9 +51,6 @@ public class Trip implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "BUS_ID")
 	private Bus bus;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "trip", orphanRemoval = true)
-	private List<Reservation> reservations = new ArrayList<Reservation>();
 
 	@XmlElement
 	public Long getId() {
@@ -128,15 +122,6 @@ public class Trip implements Serializable {
 
 	public void setTripPrice(Integer tripPrice) {
 		this.tripPrice = tripPrice;
-	}
-
-	@XmlElement
-	public List<Reservation> getReservations() {
-		return reservations;
-	}
-
-	public void setReservations(List<Reservation> reservations) {
-		this.reservations = reservations;
 	}
 
 	@Override

@@ -8,6 +8,8 @@ public interface ReservationService {
 
 	Reservation findReservationById(Long id);
 
+	Reservation findReservationByReservationId(String reservationId);
+
 	List<Reservation> findAllReservations();
 
 	void saveReservation(Reservation reservation);

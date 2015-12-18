@@ -21,6 +21,9 @@ import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "HR.RESERVATION", uniqueConstraints = { @UniqueConstraint(columnNames = "RESERVATION_ID") })
 @XmlRootElement
@@ -38,14 +41,18 @@ public class Reservation implements Serializable {
 	@Column(name = "RESERVATION_ID", length = 20, unique = true, nullable = false)
 	private String reservationId;
 
+	@Column(name = "TRIP_ID", length = 20, unique = true, nullable = false)
+	private String tripId;
+
 	@Column(name = "TEMPORARY", nullable = false)
 	private Boolean temporary = Boolean.TRUE;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "TRIP_ID")
-	private Trip trip;
+	@JoinColumn(name = "BUS_ID")
+	private Bus bus;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "reservation", orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Seat> seats = new ArrayList<Seat>();
 
 	@XmlElement
@@ -76,6 +83,15 @@ public class Reservation implements Serializable {
 	}
 
 	@XmlElement
+	public String getTripId() {
+		return tripId;
+	}
+
+	public void setTripId(String tripId) {
+		this.tripId = tripId;
+	}
+
+	@XmlElement
 	public Boolean getTemporary() {
 		return temporary;
 	}
@@ -85,21 +101,21 @@ public class Reservation implements Serializable {
 	}
 
 	@XmlElement
+	public Bus getBus() {
+		return bus;
+	}
+
+	public void setBus(Bus bus) {
+		this.bus = bus;
+	}
+
+	@XmlElement
 	public List<Seat> getSeats() {
 		return seats;
 	}
 
 	public void setSeats(List<Seat> seats) {
 		this.seats = seats;
-	}
-
-	@XmlElement
-	public Trip getTrip() {
-		return trip;
-	}
-
-	public void setTrip(Trip trip) {
-		this.trip = trip;
 	}
 
 	@Override

@@ -9,6 +9,8 @@ public interface ReservationDao extends AbstractHibernateDao<Long, Reservation> 
 	@Override
 	Reservation findById(Long id);
 
+	Reservation findByReservationId(String reservationId);
+	
 	@Override
 	List<Reservation> findAll();
 

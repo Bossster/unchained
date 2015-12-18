@@ -3,17 +3,20 @@ package com.unchained.springmvc.service;
 import java.util.List;
 
 import com.unchained.springmvc.model.Trip;
+import com.unchained.springmvc.model.TripFilter;
 
 public interface TripService {
 
-	Trip findTripById(Long id);
+	Trip findTripById(Long id) throws Exception;
 
-	List<Trip> findAllTrips();
+	Trip findTripByTripId(String tripId) throws Exception;
 
-	void saveTrip(Trip trip);
+	List<Trip> findAllTrips() throws Exception;
 
-	void update(Trip trip);
+	void saveTrip(TripFilter trip) throws Exception;
 
-	void deleteTripById(Long id);
+	void update(TripFilter trip) throws Exception;
+
+	void deleteTripById(Long id) throws Exception;
 
 }

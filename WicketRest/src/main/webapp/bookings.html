@@ -16,6 +16,9 @@
 	<script src="js/mustache.min.js"></script>
 </head>
 <body class="en">
+	<div class="message message-success alert alert-success" style="display: none;">Success</div>
+	<div class="message message-warning alert alert-warning" style="display: none;">Warning</div>
+	<div class="message message-error alert alert-danger" style="display: none;">Error</div>
 	<header class="header">
 		<div class="container">
 			<div class="row col-md-12">
@@ -116,41 +119,67 @@
 	</footer>
     <script type="text/javascript">
     	angular.module('angularApp', []);
-		$('#en').click(function() {
-			document.body.className = 'en';
-		});
-		$('#de').click(function() {
-			document.body.className = 'de';
-		});
-		$('.datepicker').datepicker();
-		$('.datepicker').datepicker('option', 'dateFormat', 'dd/mm/yy');
-		$(document).ready(function() {
+    	
+    	function showSuccess(message) {
+        	$('.message').hide();
+    		$('.message-success').html(message);
+    		$('.message-success').show();
+    	}
+    	
+    	function showWarning(message) {
+        	$('.message').hide();
+    		$('.message-warning').html(message);
+    		$('.message-warning').show();
+    	}
+    	
+    	function showError(message) {
+        	$('.message').hide();
+    		$('.message-error').html(message);
+    		$('.message-error').show();
+    	}
+    	
+    	function refreshSearch() {
 			console.log('GET/triplist');
-			var rootSearch = 'http://localhost:8888/WicketRest/rest';
-			$.ajax({
-				url: rootSearch + '/triplist',
-				method: 'GET'
-			}).then(function(data) {
-				console.log('Rendering trips');
+			var root = 'http://localhost:8888/WicketRest/rest';
+			$.get(root + '/triplist', function(data) {
 				$.get('templates/search.mst', function(template) {
 					var rendered = Mustache.render(template, data);
 					$('.search').removeClass('loading');
 				    $('.search').html(rendered);
 				});
 			});
+    	}
+    	
+    	function refreshReservations() {
 			console.log('GET/reservationlist');
-			var rootReservation = 'http://localhost:8888/WicketRest/rest';
-			$.ajax({
-				url: rootReservation + '/reservationlist',
-				method: 'GET'
-			}).then(function(data) {
-				console.log('Rendering reservations');
+			var root = 'http://localhost:8888/WicketRest/rest';
+			$.get(root + '/reservationlist', function(data) {
 				$.get('templates/reservations.mst', function(template) {
 					var rendered = Mustache.render(template, data);
 					$('.reservations').removeClass('loading');
 				    $('.reservations').html(rendered);
 				});
 			});
+    	}
+    	
+		$('#en').click(function() {
+			document.body.className = 'en';
+		});
+		$('#de').click(function() {
+			document.body.className = 'de';
+		});
+		
+    	$('.message').hide();
+		$('.message').click(function() {
+			$(this).hide();
+		});
+    	
+		$('.datepicker').datepicker();
+		$('.datepicker').datepicker('option', 'dateFormat', 'yy-mm-dd');
+		
+		$(function() {
+			refreshSearch();
+			refreshReservations();
 		});
     </script>
 </body>

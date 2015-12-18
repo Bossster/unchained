@@ -19,7 +19,7 @@ public class BusServiceImpl implements BusService {
 	BusDao busDao;
 
 	@Override
-	public Bus findBusById(Long id) {
+	public Bus findBusById(Long id) throws Exception {
 		if (id == null) {
 			return null;
 		}
@@ -27,7 +27,7 @@ public class BusServiceImpl implements BusService {
 	}
 
 	@Override
-	public Bus findBusByBusType(String busType) {
+	public Bus findBusByBusType(String busType) throws Exception {
 		if (StringUtils.isEmpty(busType)) {
 			return null;
 		}
@@ -35,17 +35,17 @@ public class BusServiceImpl implements BusService {
 	}
 
 	@Override
-	public List<Bus> findAllBuses() {
+	public List<Bus> findAllBuses() throws Exception {
 		return busDao.findAll();
 	}
 
 	@Override
-	public void saveBus(Bus bus) {
+	public void saveBus(Bus bus) throws Exception {
 		busDao.save(bus);
 	}
 
 	@Override
-	public void update(Bus bus) {
+	public void update(Bus bus) throws Exception {
 		Bus found = busDao.findById(bus.getId());
 		if (found != null) {
 			found.setBusType(bus.getBusType());
@@ -54,7 +54,7 @@ public class BusServiceImpl implements BusService {
 	}
 
 	@Override
-	public void deleteBusById(Long id) {
+	public void deleteBusById(Long id) throws Exception {
 		busDao.deleteById(id);
 	}
 

@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.unchained.springmvc.dao.ReservationDao;
 import com.unchained.springmvc.model.Reservation;
@@ -26,6 +27,14 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
+	public Reservation findReservationByReservationId(String reservationId) {
+		if (StringUtils.isEmpty(reservationId)) {
+			return null;
+		}
+		return reservationDao.findByReservationId(reservationId);
+	}
+
+	@Override
 	public List<Reservation> findAllReservations() {
 		return reservationDao.findAll();
 	}
@@ -41,8 +50,9 @@ public class ReservationServiceImpl implements ReservationService {
 		if (found != null) {
 			found.setReservationDate(reservation.getReservationDate());
 			found.setReservationId(reservation.getReservationId());
+			found.setTripId(reservation.getTripId());
 			found.setTemporary(reservation.getTemporary());
-			found.setTrip(reservation.getTrip());
+			found.setBus(reservation.getBus());
 			found.setSeats(reservation.getSeats());
 		}
 	}

@@ -9,9 +9,10 @@ public class ReservationFilter extends Reservation {
 		setId(reservation.getId());
 		setReservationDate(reservation.getReservationDate());
 		setReservationId(reservation.getReservationId());
+		setTripId(reservation.getTripId());
 		setTemporary(reservation.getTemporary());
+		setBus(reservation.getBus());
 		setSeats(reservation.getSeats());
-		setTrip(reservation.getTrip());
 	}
 
 }

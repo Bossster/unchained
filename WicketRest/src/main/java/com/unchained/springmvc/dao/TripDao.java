@@ -9,6 +9,8 @@ public interface TripDao extends AbstractHibernateDao<Long, Trip> {
 	@Override
 	Trip findById(Long id);
 
+	Trip findByTripId(String tripId);
+
 	@Override
 	List<Trip> findAll();
 

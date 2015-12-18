@@ -15,10 +15,8 @@
         <td>{{id}}</td>
         <td>{{tripId}}</td>
         <td>{{bus.busType}}</td>
-        <td>{{tripDateFrom}}</td>
-        <td>{{tripDateTo}}</td>
-        <td>{{tripFrom}}</td>
-        <td>{{tripTo}}</td>
+        <td>{{tripDateFrom}} / {{tripDateTo}}</td>
+        <td>{{tripFrom}} / {{tripTo}}</td>
         <td>{{tripPrice}}</td>
       </tr>
       {{/.}}

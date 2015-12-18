@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.unchained.springmvc.model.Trip;
@@ -14,6 +15,13 @@ public class TripDaoImpl extends AbstractDao<Long, Trip> implements TripDao {
 	@Override
 	public Trip findById(Long id) {
 		Trip trip = getByKey(id);
+		return trip;
+	}
+
+	@Override
+	public Trip findByTripId(String tripId) {
+		Criteria criteria = createCriteria().add(Restrictions.eq("tripId", tripId));
+		Trip trip = (Trip) criteria.uniqueResult();
 		return trip;
 	}
 

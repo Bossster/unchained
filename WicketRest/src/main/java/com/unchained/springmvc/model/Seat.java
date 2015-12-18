@@ -31,6 +31,10 @@ public class Seat implements Serializable {
 	@JoinColumn(name = "RESERVATION_ID")
 	private Reservation reservation;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "BUS_ID")
+	private Bus bus;
+
 	@XmlElement
 	public Long getId() {
 		return id;
@@ -58,6 +62,15 @@ public class Seat implements Serializable {
 		this.reservation = reservation;
 	}
 	
+	@XmlElement
+	public Bus getBus() {
+		return bus;
+	}
+
+	public void setBus(Bus bus) {
+		this.bus = bus;
+	}
+
 	@Override
 	public int hashCode() {
 		return super.hashCode();

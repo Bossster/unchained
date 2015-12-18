@@ -16,6 +16,9 @@
 	<script src="js/mustache.min.js"></script>
 </head>
 <body class="en">
+	<div class="message message-success alert alert-success" style="display: none;">Success</div>
+	<div class="message message-warning alert alert-warning" style="display: none;">Warning</div>
+	<div class="message message-error alert alert-danger" style="display: none;">Error</div>
 	<header class="header">
 		<div class="container">
 			<div class="row col-md-12">
@@ -35,7 +38,7 @@
 			<h2 class="text-left" lang="de">Busse</h2>
 			<div class="buses loading"></div>
 			<hr>
-			<form class="form-horizontal" role="form">
+			<form class="form-horizontal" method="post">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="bus-id">Id</label>
 					<div class="col-sm-10">
@@ -57,10 +60,10 @@
 					</div>
 				</div>
 				<div class="article-controls text-right">
-					<button type="submit" class="btn btn-success" lang="en">Add / Update</button>
-					<button type="submit" class="btn btn-success" lang="de">Add / Update</button>
-					<button type="submit" class="btn btn-danger" lang="en">Delete</button>
-					<button type="submit" class="btn btn-danger" lang="de">Delete</button>
+					<button type="submit" class="btn btn-success btn-add-bus" lang="en">Add / Update</button>
+					<button type="submit" class="btn btn-success btn-add-bus" lang="de">Add / Update</button>
+					<button type="submit" class="btn btn-danger btn-delete-bus" lang="en">Delete</button>
+					<button type="submit" class="btn btn-danger btn-delete-bus" lang="de">Delete</button>
 					<button type="reset" class="btn btn-warning" lang="en">Reset</button>
 					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
 				</div>
@@ -127,10 +130,10 @@
 					</div>
 				</div>
 				<div class="article-controls text-right">
-					<button type="submit" class="btn btn-success" lang="en">Add / Update</button>
-					<button type="submit" class="btn btn-success" lang="de">Add / Update</button>
-					<button type="submit" class="btn btn-danger" lang="en">Delete</button>
-					<button type="submit" class="btn btn-danger" lang="de">Delete</button>
+					<button type="submit" class="btn btn-success btn-add-trip" lang="en">Add / Update</button>
+					<button type="submit" class="btn btn-success btn-add-trip" lang="de">Add / Update</button>
+					<button type="submit" class="btn btn-danger btn-delete-trip" lang="en">Delete</button>
+					<button type="submit" class="btn btn-danger btn-delete-trip" lang="de">Delete</button>
 					<button type="reset" class="btn btn-warning" lang="en">Reset</button>
 					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
 				</div>
@@ -151,41 +154,232 @@
 	</footer>
     <script type="text/javascript">
     	angular.module('angularApp', []);
-		$('#en').click(function() {
-			document.body.className = 'en';
-		});
-		$('#de').click(function() {
-			document.body.className = 'de';
-		});
-		$('.datepicker').datepicker();
-		$('.datepicker').datepicker('option', 'dateFormat', 'dd/mm/yy');
-		$(document).ready(function() {
-			console.log('GET/buslist');
-			var rootBus = 'http://localhost:8888/WicketRest/rest';
+
+    	function showSuccess(message) {
+        	$('.message').hide();
+    		$('.message-success').html(message);
+    		$('.message-success').show();
+    	}
+    	
+    	function showWarning(message) {
+        	$('.message').hide();
+    		$('.message-warning').html(message);
+    		$('.message-warning').show();
+    	}
+    	
+    	function showError(message) {
+        	$('.message').hide();
+    		$('.message-error').html(message);
+    		$('.message-error').show();
+    	}
+    	
+    	function addBus(id, busType, maxSeats) {
+    		if (id) {
+				console.log('PUT/bus');
+				var root = 'http://localhost:8888/WicketRest/rest';
+				$.ajax({
+					data: JSON.stringify({ 
+						'id': id, 
+						'busType': busType, 
+						'maxSeats': maxSeats 
+					}),
+					contentType: 'application/json',
+					url: root + '/bus/' + id,
+					method: 'PUT',
+					error(xhr, status, error) {
+						showError(error);
+						refreshBuses();
+					},
+					success(data, status) {
+						showSuccess(status);
+						refreshBuses();
+					}
+				});
+    		} else {
+				console.log('POST/bus');
+				var root = 'http://localhost:8888/WicketRest/rest';
+				$.ajax({
+					data: JSON.stringify({ 
+						'busType': busType, 
+						'maxSeats': maxSeats 
+					}),
+					contentType: 'application/json',
+					url: root + '/bus',
+					method: 'POST',
+					error(xhr, status, error) {
+						showError(error);
+						refreshBuses();
+					},
+					success(data, status) {
+						showSuccess(status);
+						refreshBuses();
+					}
+				});
+    		}
+    	}
+    	
+    	function deleteBus(id) {
+			console.log('DELETE/bus');
+			var root = 'http://localhost:8888/WicketRest/rest';
 			$.ajax({
-				url: rootBus + '/buslist',
-				method: 'GET'
-			}).then(function(data) {
-				console.log('Rendering buses');
+				contentType: 'application/json',
+				url: root + '/bus/' + id,
+				method: 'DELETE',
+				error(xhr, status, error) {
+					showError(error);
+					refreshBuses();
+				},
+				success(data, status) {
+					showSuccess(status);
+					refreshBuses();
+				}
+			});
+    	}
+    	
+    	function addTrip(id, tripId, tripBusType, tripDateFrom, tripDateTo, tripFrom, tripTo, tripPrice) {
+    		if (id) {
+				console.log('PUT/trip');
+				var root = 'http://localhost:8888/WicketRest/rest';
+				$.ajax({
+					data: JSON.stringify({ 
+						'id': id, 
+						'tripId': tripId, 
+						'tripBusType': tripBusType, 
+						'tripDateFrom': tripDateFrom, 
+						'tripDateTo': tripDateTo, 
+						'tripFrom': tripFrom, 
+						'tripTo': tripTo, 
+						'tripPrice': tripPrice 
+					}),
+					contentType: 'application/json',
+					url: root + '/trip/' + id,
+					method: 'PUT',
+					error(xhr, status, error) {
+						showError(error);
+						refreshTrips();
+					},
+					success(data, status) {
+						showSuccess(status);
+						refreshTrips();
+					}
+				});
+    		} else {
+				console.log('POST/trip');
+				var root = 'http://localhost:8888/WicketRest/rest';
+				$.ajax({
+					data: JSON.stringify({ 
+						'tripId': tripId, 
+						'tripBusType': tripBusType, 
+						'tripDateFrom': tripDateFrom, 
+						'tripDateTo': tripDateTo, 
+						'tripFrom': tripFrom, 
+						'tripTo': tripTo, 
+						'tripPrice': tripPrice 
+					}),
+					contentType: 'application/json',
+					url: root + '/trip',
+					method: 'POST',
+					error(xhr, status, error) {
+						showError(error);
+						refreshTrips();
+					},
+					success(data, status) {
+						showSuccess(status);
+						refreshTrips();
+					}
+				});
+    		}
+    	}
+    	
+    	function deleteTrip(id) {
+			console.log('DELETE/trip');
+			var root = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				contentType: 'application/json',
+				url: root + '/trip/' + id,
+				method: 'DELETE',
+				error(xhr, status, error) {
+					showError(error);
+					refreshTrips();
+				},
+				success(data, status) {
+					showSuccess(status);
+					refreshTrips();
+				}
+			});
+    	}
+    	
+    	function refreshBuses() {
+			console.log('GET/buslist');
+			var root = 'http://localhost:8888/WicketRest/rest';
+			$.get(root + '/buslist', function(data) {
 				$.get('templates/buses.mst', function(template) {
 					var rendered = Mustache.render(template, data);
 					$('.buses').removeClass('loading');
 				    $('.buses').html(rendered);
 				});
 			});
+    	}
+    	
+    	function refreshTrips() {
 			console.log('GET/triplist');
-			var rootReservation = 'http://localhost:8888/WicketRest/rest';
-			$.ajax({
-				url: rootReservation + '/triplist',
-				method: 'GET'
-			}).then(function(data) {
-				console.log('Rendering trips');
+			var root = 'http://localhost:8888/WicketRest/rest';
+			$.get(root + '/triplist', function(data) {
 				$.get('templates/trips.mst', function(template) {
 					var rendered = Mustache.render(template, data);
 					$('.trips').removeClass('loading');
 				    $('.trips').html(rendered);
 				});
 			});
+    	}
+    	
+		$('#en').click(function() {
+			document.body.className = 'en';
+		});
+		$('#de').click(function() {
+			document.body.className = 'de';
+		});
+		
+    	$('.message').hide();
+		$('.message').click(function() {
+			$(this).hide();
+		});
+    	
+		$('.datepicker').datepicker();
+		$('.datepicker').datepicker('option', 'dateFormat', 'yy-mm-dd');
+		
+		$('.btn-add-bus').click(function(event) {
+			var id = $('#bus-id').val();
+			var busType = $('#bus-type').val();
+			var maxSeats = $('#max-seats').val();
+			addBus(id, busType, maxSeats);
+		});
+
+		$('.btn-delete-bus').click(function(event) {
+			var id = $('#bus-id').val();
+			deleteBus(id);
+		});
+
+		$('.btn-add-trip').click(function(event) {
+			var id = $('#trip-id').val();
+			var tripId = $('#trip-trip-id').val();
+			var tripBusType = $('#trip-bus-type').val();
+			var tripDateFrom = $('#trip-date-from').val();
+			var tripDateTo = $('#trip-date-to').val();
+			var tripFrom = $('#trip-from').val();
+			var tripTo = $('#trip-to').val();
+			var tripPrice = $('#trip-price').val();
+			addTrip(id, tripId, tripBusType, tripDateFrom, tripDateTo, tripFrom, tripTo, tripPrice);
+		});
+
+		$('.btn-delete-trip').click(function(event) {
+			var id = $('#trip-id').val();
+			deleteTrip(id);
+		});
+
+		$(function() {
+			refreshBuses();
+			refreshTrips();
 		});
     </script>
 </body>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.unchained.springmvc.model.Reservation;
@@ -14,6 +15,13 @@ public class ReservationDaoImpl extends AbstractDao<Long, Reservation> implement
 	@Override
 	public Reservation findById(Long id) {
 		Reservation reservation = getByKey(id);
+		return reservation;
+	}
+
+	@Override
+	public Reservation findByReservationId(String reservationId) {
+		Criteria criteria = createCriteria().add(Restrictions.eq("reservationId", reservationId));
+		Reservation reservation = (Reservation) criteria.uniqueResult();
 		return reservation;
 	}
 

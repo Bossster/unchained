@@ -1,10 +1,17 @@
 package com.unchained.springmvc.model;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class TripFilter extends Trip {
 
+	private String tripBusType;
+	
+	public TripFilter() {
+		super();
+	}
+	
 	public TripFilter(Trip trip) {
 		setId(trip.getId());
 		setTripId(trip.getTripId());
@@ -14,7 +21,15 @@ public class TripFilter extends Trip {
 		setTripTo(trip.getTripTo());
 		setTripPrice(trip.getTripPrice());
 		setBus(trip.getBus());
-		setReservations(trip.getReservations());
 	}
 
+	@XmlElement
+	public String getTripBusType() {
+		return tripBusType;
+	}
+
+	public void setTripBusType(String tripBusType) {
+		this.tripBusType = tripBusType;
+	}
+	
 }

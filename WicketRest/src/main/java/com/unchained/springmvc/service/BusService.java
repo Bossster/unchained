@@ -6,16 +6,16 @@ import com.unchained.springmvc.model.Bus;
 
 public interface BusService {
 
-	Bus findBusById(Long id);
+	Bus findBusById(Long id) throws Exception;
 	
-	Bus findBusByBusType(String busType);
+	Bus findBusByBusType(String busType) throws Exception;
 	
-	List<Bus> findAllBuses();
+	List<Bus> findAllBuses() throws Exception;
 	
-	void saveBus(Bus bus);
+	void saveBus(Bus bus) throws Exception;
 	
-	void update(Bus bus);
+	void update(Bus bus) throws Exception;
 	
-	void deleteBusById(Long id);
+	void deleteBusById(Long id) throws Exception;
 	
 }
