@@ -41,7 +41,7 @@ public class Reservation implements Serializable {
 	@Column(name = "RESERVATION_ID", length = 20, unique = true, nullable = false)
 	private String reservationId;
 
-	@Column(name = "TRIP_ID", length = 20, unique = true, nullable = false)
+	@Column(name = "TRIP_ID", length = 20, nullable = false)
 	private String tripId;
 
 	@Column(name = "TEMPORARY", nullable = false)
