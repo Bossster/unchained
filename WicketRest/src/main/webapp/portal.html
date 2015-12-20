@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bookings</title>
+	<title>Portal</title>
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
@@ -22,7 +22,7 @@
 	<header class="header">
 		<div class="container">
 			<div class="row col-md-12">
-				<a class="center-block logo-link" href="http://www.oebb.at" target="_blank"><img class="img-responsive logo" src="img/OBB_logo.png" alt="logo"></a>
+				<a class="center-block logo-link" href="#" target="_blank"><img class="img-responsive logo" src="img/OBB_logo.png" alt="logo"></a>
 				<h2 class="text-center" lang="en">Bookings</h2>
 				<h2 class="text-center" lang="de">Buchungen</h2>
 			</div>
@@ -68,8 +68,8 @@
 					</div>
 				</div>
 				<div class="article-controls text-right">
-					<button type="submit" class="btn btn-success" lang="en">Search</button>
-					<button type="submit" class="btn btn-success" lang="de">Suchen</button>
+					<button type="submit" class="btn btn-success btn-search" lang="en">Search</button>
+					<button type="submit" class="btn btn-success btn-search" lang="de">Suchen</button>
 					<button type="reset" class="btn btn-warning" lang="en">Reset</button>
 					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
 				</div>
@@ -138,10 +138,10 @@
     		$('.message-error').show();
     	}
     	
-    	function refreshSearch() {
+    	function refreshSearch(seatCount) {
 			console.log('GET/triplist');
 			var root = 'http://localhost:8888/WicketRest/rest';
-			$.get(root + '/triplist', function(data) {
+			$.get(root + '/triplist' + (seatCount > 0 ? '?seatCount=' + seatCount : ''), function(data) {
 				$.get('templates/search.mst', function(template) {
 					var rendered = Mustache.render(template, data);
 					$('.search').removeClass('loading');
@@ -177,8 +177,13 @@
 		$('.datepicker').datepicker();
 		$('.datepicker').datepicker('option', 'dateFormat', 'yy-mm-dd');
 		
+		$('.btn-search').click(function(event) {
+			var seatCount = $('#search-seats').val();;
+			refreshSearch(seatCount);
+		});
+
+		
 		$(function() {
-			refreshSearch();
 			refreshReservations();
 		});
     </script>

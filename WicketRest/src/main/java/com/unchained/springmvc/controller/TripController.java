@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -40,7 +41,8 @@ public class TripController {
 	MessageSource messageSource;
 
 	@RequestMapping(value = "/triplist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TripFilter>> listTrips() {
+	public ResponseEntity<List<TripFilter>> listTrips(
+			@RequestParam(name = "seatCount", defaultValue = "1", required = false) Integer seatCount) {
 		List<Trip> trips = null;
 		try {
 			trips = tripService.findAllTrips();
@@ -51,7 +53,7 @@ public class TripController {
 		if (trips != null && !trips.isEmpty()) {
 			List<TripFilter> tripList = new ArrayList<TripFilter>();
 			for (Trip trip : trips) {
-				tripList.add(new TripFilter(trip));
+				tripList.add(new TripFilter(trip, seatCount));
 			}
 			LOG.info(tripList);
 			return new ResponseEntity<List<TripFilter>>(tripList, HttpStatus.OK);

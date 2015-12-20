@@ -3,6 +3,7 @@ package com.unchained.springmvc.dao;
 import java.util.List;
 
 import com.unchained.springmvc.model.Reservation;
+import com.unchained.springmvc.model.ReservationFilter;
 
 public interface ReservationDao extends AbstractHibernateDao<Long, Reservation> {
 
@@ -13,6 +14,8 @@ public interface ReservationDao extends AbstractHibernateDao<Long, Reservation> 
 	
 	@Override
 	List<Reservation> findAll();
+	
+	List<ReservationFilter> findReservations();
 
 	@Override
 	void save(Reservation reservation);

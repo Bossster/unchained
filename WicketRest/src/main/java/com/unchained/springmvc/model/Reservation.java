@@ -47,7 +47,7 @@ public class Reservation implements Serializable {
 	@Column(name = "TEMPORARY", nullable = false)
 	private Boolean temporary = Boolean.TRUE;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "BUS_ID")
 	private Bus bus;
 

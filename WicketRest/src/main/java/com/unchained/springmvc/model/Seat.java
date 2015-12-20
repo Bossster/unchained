@@ -27,11 +27,11 @@ public class Seat implements Serializable {
 	@Column(name = "SEAT_NUMBER", length = 20, nullable = false)
 	private Integer seatNumber = 1;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "RESERVATION_ID")
 	private Reservation reservation;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "BUS_ID")
 	private Bus bus;
 

@@ -48,7 +48,7 @@ public class Trip implements Serializable {
 	@Column(name = "TRIP_PRICE", length = 20, nullable = false)
 	private Integer tripPrice;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "BUS_ID")
 	private Bus bus;
 
@@ -68,15 +68,6 @@ public class Trip implements Serializable {
 
 	public void setTripId(String tripId) {
 		this.tripId = tripId;
-	}
-
-	@XmlElement
-	public Bus getBus() {
-		return bus;
-	}
-
-	public void setBus(Bus bus) {
-		this.bus = bus;
 	}
 
 	@XmlElement
@@ -122,6 +113,15 @@ public class Trip implements Serializable {
 
 	public void setTripPrice(Integer tripPrice) {
 		this.tripPrice = tripPrice;
+	}
+
+	@XmlElement
+	public Bus getBus() {
+		return bus;
+	}
+
+	public void setBus(Bus bus) {
+		this.bus = bus;
 	}
 
 	@Override

@@ -8,10 +8,14 @@ public class TripFilter extends Trip {
 
 	private String tripBusType;
 	
+	private Integer tripTotalPrice;
+
+	private Integer tripSeatCount;
+
 	public TripFilter() {
 		super();
 	}
-	
+
 	public TripFilter(Trip trip) {
 		setId(trip.getId());
 		setTripId(trip.getTripId());
@@ -23,6 +27,11 @@ public class TripFilter extends Trip {
 		setBus(trip.getBus());
 	}
 
+	public TripFilter(Trip trip, Integer seatCount) {
+		this(trip);
+		setTripTotalPrice(getTripPrice() * seatCount);
+	}
+
 	@XmlElement
 	public String getTripBusType() {
 		return tripBusType;
@@ -32,4 +41,22 @@ public class TripFilter extends Trip {
 		this.tripBusType = tripBusType;
 	}
 	
+	@XmlElement
+	public Integer getTripTotalPrice() {
+		return tripTotalPrice;
+	}
+
+	public void setTripTotalPrice(Integer tripTotalPrice) {
+		this.tripTotalPrice = tripTotalPrice;
+	}
+
+	@XmlElement
+	public Integer getTripSeatCount() {
+		return tripSeatCount;
+	}
+
+	public void setTripSeatCount(Integer tripSeatCount) {
+		this.tripSeatCount = tripSeatCount;
+	}
+
 }
