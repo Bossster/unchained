@@ -17,7 +17,7 @@
         <td>{{tripFrom}} / {{tripTo}}</td>
         <td>{{tripPrice}}</td>
         <td>{{tripTotalPrice}}</td>
-        <td>{{tripAvailableSeats}}</td>
+        <td>{{tripSeatCount}}</td>
       </tr>
       {{/.}}
     </tbody>

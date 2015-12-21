@@ -18,5 +18,7 @@ public interface TripService {
 	void update(TripFilter trip) throws Exception;
 
 	void deleteTripById(Long id) throws Exception;
+	
+	Integer getAvailableSeats(String tripId) throws Exception;
 
 }

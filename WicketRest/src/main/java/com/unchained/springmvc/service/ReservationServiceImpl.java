@@ -1,6 +1,11 @@
 package com.unchained.springmvc.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -9,8 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.unchained.springmvc.dao.ReservationDao;
+import com.unchained.springmvc.dao.SeatDao;
+import com.unchained.springmvc.dao.TripDao;
 import com.unchained.springmvc.model.Reservation;
 import com.unchained.springmvc.model.ReservationFilter;
+import com.unchained.springmvc.model.Seat;
+import com.unchained.springmvc.model.Trip;
 
 @Service("reservationService")
 @Transactional
@@ -18,6 +27,12 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	ReservationDao reservationDao;
+
+	@Autowired
+	SeatDao seatDao;
+
+	@Autowired
+	TripDao tripDao;
 
 	@Override
 	public Reservation findReservationById(Long id) throws Exception {
@@ -46,8 +61,45 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public void saveReservation(Reservation reservation) throws Exception {
-		reservationDao.save(reservation);
+	public void saveReservation(ReservationFilter reservation) throws Exception {
+		Reservation entity = new Reservation();
+		entity.setReservationDate(new Date());
+		entity.setReservationId(UUID.randomUUID().toString());
+		entity.setTripId(reservation.getTripId());
+		entity.setTemporary(Boolean.TRUE);
+
+		Trip trip = tripDao.findByTripId(reservation.getTripId());
+		entity.setBus(trip.getBus());
+		entity.setSeats(bookSeats(entity, reservation.getReservationSeatCount()));
+		reservationDao.save(entity);
+	}
+
+	private List<Seat> bookSeats(Reservation reservation, int reservationSeatCount) {
+		List<Seat> result = new ArrayList<Seat>();
+		List<Seat> seats = seatDao.findAllByTripId(reservation.getTripId());
+		Set<Integer> seatNumbers = new HashSet<Integer>();
+
+		if (seats != null && !seats.isEmpty()) {
+			for (Seat seat : seats) {
+				seatNumbers.add(seat.getSeatNumber());
+			}
+		}
+
+		int seatCount = 1;
+		for (int i = 1; i <= reservation.getBus().getMaxSeats(); i++) {
+			if (!seatNumbers.contains(i)) {
+				Seat seat = new Seat();
+				seat.setBus(reservation.getBus());
+				seat.setReservation(reservation);
+				seat.setSeatNumber(i);
+				result.add(seat);
+
+				if (++seatCount > reservationSeatCount) {
+					break;
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override

@@ -53,7 +53,6 @@ public class Seat implements Serializable {
 		this.seatNumber = seatNumber;
 	}
 
-	@XmlElement
 	public Reservation getReservation() {
 		return reservation;
 	}
@@ -61,8 +60,7 @@ public class Seat implements Serializable {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
-	
-	@XmlElement
+
 	public Bus getBus() {
 		return bus;
 	}
@@ -75,7 +73,7 @@ public class Seat implements Serializable {
 	public int hashCode() {
 		return super.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		return super.equals(obj);

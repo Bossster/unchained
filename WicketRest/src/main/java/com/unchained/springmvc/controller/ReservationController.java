@@ -41,22 +41,20 @@ public class ReservationController {
 
 	@RequestMapping(value = "/reservationlist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReservationFilter>> listReservations() {
-		List<Reservation> reservations = null;
 		try {
-			//TODO
-			List<ReservationFilter> found = reservationService.findReservations();
-			reservations = reservationService.findAllReservations();
+			List<Reservation> reservations = reservationService.findAllReservations();
+			if (reservations != null && !reservations.isEmpty()) {
+				List<ReservationFilter> reservationList = new ArrayList<ReservationFilter>();
+				for (Reservation reservation : reservations) {
+					Trip trip = tripService.findTripByTripId(reservation.getTripId());
+					reservationList.add(new ReservationFilter(reservation, trip));
+				}
+				LOG.info(reservationList);
+				return new ResponseEntity<List<ReservationFilter>>(reservationList, HttpStatus.OK);
+			}
 		} catch (Exception e) {
 			LOG.error(e);
 			return new ResponseEntity<List<ReservationFilter>>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		if (reservations != null && !reservations.isEmpty()) {
-			List<ReservationFilter> reservationList = new ArrayList<ReservationFilter>();
-			for (Reservation reservation : reservations) {
-				reservationList.add(new ReservationFilter(reservation));
-			}
-			LOG.info(reservationList);
-			return new ResponseEntity<List<ReservationFilter>>(reservationList, HttpStatus.OK);
 		}
 		return new ResponseEntity<List<ReservationFilter>>(HttpStatus.NO_CONTENT);
 	}
@@ -85,8 +83,7 @@ public class ReservationController {
 			UriComponentsBuilder uriBuilder) {
 
 		LOG.info(reservation);
-		if (reservation == null || StringUtils.isEmpty(reservation.getReservationId())
-				|| StringUtils.isEmpty(reservation.getTripId())) {
+		if (reservation == null || StringUtils.isEmpty(reservation.getTripId())) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 		try {

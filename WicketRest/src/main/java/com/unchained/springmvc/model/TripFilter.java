@@ -16,7 +16,7 @@ public class TripFilter extends Trip {
 		super();
 	}
 
-	public TripFilter(Trip trip) {
+	public TripFilter(Trip trip, Integer seatCount, Integer tripSeatCount) {
 		setId(trip.getId());
 		setTripId(trip.getTripId());
 		setTripDateFrom(trip.getTripDateFrom());
@@ -25,11 +25,9 @@ public class TripFilter extends Trip {
 		setTripTo(trip.getTripTo());
 		setTripPrice(trip.getTripPrice());
 		setBus(trip.getBus());
-	}
-
-	public TripFilter(Trip trip, Integer seatCount) {
-		this(trip);
+		
 		setTripTotalPrice(getTripPrice() * seatCount);
+		setTripSeatCount(tripSeatCount);
 	}
 
 	@XmlElement

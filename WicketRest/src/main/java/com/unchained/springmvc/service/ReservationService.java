@@ -15,7 +15,7 @@ public interface ReservationService {
 
 	List<ReservationFilter> findReservations() throws Exception;
 
-	void saveReservation(Reservation reservation) throws Exception;
+	void saveReservation(ReservationFilter reservation) throws Exception;
 
 	void update(Reservation reservation) throws Exception;
 

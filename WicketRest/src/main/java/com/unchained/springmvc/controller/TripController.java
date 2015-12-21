@@ -43,20 +43,22 @@ public class TripController {
 	@RequestMapping(value = "/triplist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TripFilter>> listTrips(
 			@RequestParam(name = "seatCount", defaultValue = "1", required = false) Integer seatCount) {
-		List<Trip> trips = null;
+
 		try {
-			trips = tripService.findAllTrips();
+			List<Trip> trips = tripService.findAllTrips();
+			if (trips != null && !trips.isEmpty()) {
+				List<TripFilter> tripList = new ArrayList<TripFilter>();
+				for (Trip trip : trips) {
+					Integer maxSeats = trip.getBus().getMaxSeats();
+					Integer availableSeats = tripService.getAvailableSeats(trip.getTripId());
+					tripList.add(new TripFilter(trip, seatCount, maxSeats - availableSeats));
+				}
+				LOG.info(tripList);
+				return new ResponseEntity<List<TripFilter>>(tripList, HttpStatus.OK);
+			}
 		} catch (Exception e) {
 			LOG.error(e);
 			return new ResponseEntity<List<TripFilter>>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		if (trips != null && !trips.isEmpty()) {
-			List<TripFilter> tripList = new ArrayList<TripFilter>();
-			for (Trip trip : trips) {
-				tripList.add(new TripFilter(trip, seatCount));
-			}
-			LOG.info(tripList);
-			return new ResponseEntity<List<TripFilter>>(tripList, HttpStatus.OK);
 		}
 		return new ResponseEntity<List<TripFilter>>(HttpStatus.NO_CONTENT);
 	}

@@ -36,8 +36,6 @@
 		<div class="container">
 			<h2 class="text-left" lang="en">Search</h2>
 			<h2 class="text-left" lang="de">Suchen</h2>
-			<div class="search loading"></div>
-			<hr>
 			<form class="form-horizontal" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="search-from" lang="en">From</label>
@@ -74,6 +72,8 @@
 					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
 				</div>
 			</form>
+			<br>
+			<div class="search loading"></div>
 			<hr>
 			<h2 class="text-left" lang="en">Reservations</h2>
 			<h2 class="text-left" lang="de">Reservierungen</h2>
@@ -88,17 +88,17 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="reservation-trip" lang="en">Trip Id</label>
-					<label class="control-label col-sm-2" for="reservation-trip" lang="de">Fahrt Id</label>
+					<label class="control-label col-sm-2" for="reservation-trip-id" lang="en">Trip Id</label>
+					<label class="control-label col-sm-2" for="reservation-trip-id" lang="de">Fahrt Id</label>
 					<div class="col-sm-10">
-						<input id="reservation-trip" type="text" class="form-control" placeholder="Enter trip id">
+						<input id="reservation-trip-id" type="text" class="form-control" placeholder="Enter trip id">
 					</div>
 				</div>
 				<div class="article-controls text-right">
-					<button type="submit" class="btn btn-success" lang="en">Book</button>
-					<button type="submit" class="btn btn-success" lang="de">Buchen</button>
-					<button type="submit" class="btn btn-danger" lang="en">Cancel</button>
-					<button type="submit" class="btn btn-danger" lang="de">Stornieren</button>
+					<button type="submit" class="btn btn-success btn-book" lang="en">Book</button>
+					<button type="submit" class="btn btn-success btn-book" lang="de">Buchen</button>
+					<button type="submit" class="btn btn-danger btn-book-cancel" lang="en">Cancel</button>
+					<button type="submit" class="btn btn-danger btn-book-cancel" lang="de">Stornieren</button>
 					<button type="reset" class="btn btn-warning" lang="en">Reset</button>
 					<button type="reset" class="btn btn-warning" lang="de">Reset</button>
 				</div>
@@ -162,6 +162,54 @@
 			});
     	}
     	
+    	function bookReservation(id, seatCount, tripId) {
+			console.log('POST/reservation');
+			var root = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				data: JSON.stringify({ 
+					'reservationSeatCount': seatCount,
+					'tripId': tripId 
+				}),
+				contentType: 'application/json',
+				url: root + '/reservation',
+				method: 'POST',
+				error(xhr, status, error) {
+					showError(error);
+					var seatCount = $('#search-seats').val();
+					refreshSearch(seatCount);
+					refreshReservations();
+				},
+				success(data, status) {
+					showSuccess(status);
+					var seatCount = $('#search-seats').val();
+					refreshSearch(seatCount);
+					refreshReservations();
+				}
+			});
+    	}
+    	
+    	function cancelReservation(id) {
+			console.log('DELETE/reservation');
+			var root = 'http://localhost:8888/WicketRest/rest';
+			$.ajax({
+				contentType: 'application/json',
+				url: root + '/reservation/' + id,
+				method: 'DELETE',
+				error(xhr, status, error) {
+					showError(error);
+					var seatCount = $('#search-seats').val();
+					refreshSearch(seatCount);
+					refreshReservations();
+				},
+				success(data, status) {
+					showSuccess(status);
+					var seatCount = $('#search-seats').val();
+					refreshSearch(seatCount);
+					refreshReservations();
+				}
+			});
+    	}
+    	
 		$('#en').click(function() {
 			document.body.className = 'en';
 		});
@@ -178,12 +226,25 @@
 		$('.datepicker').datepicker('option', 'dateFormat', 'yy-mm-dd');
 		
 		$('.btn-search').click(function(event) {
-			var seatCount = $('#search-seats').val();;
+			var seatCount = $('#search-seats').val();
 			refreshSearch(seatCount);
 		});
 
+		$('.btn-book').click(function(event) {
+			var id = $('#reservation-id').val();
+			var seatCount = $('#search-seats').val();
+			var tripId = $('#reservation-trip-id').val();
+			bookReservation(id, seatCount, tripId);
+		});
+		
+		$('.btn-book-cancel').click(function(event) {
+			var id = $('#reservation-id').val();
+			cancelReservation(id);
+		});
 		
 		$(function() {
+			var seatCount = $('#search-seats').val();
+			refreshSearch(seatCount);
 			refreshReservations();
 		});
     </script>

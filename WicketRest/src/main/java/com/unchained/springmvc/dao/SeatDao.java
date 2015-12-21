@@ -12,10 +12,12 @@ public interface SeatDao extends AbstractHibernateDao<Long, Seat> {
 	@Override
 	List<Seat> findAll();
 
+	List<Seat> findAllByTripId(String tripId);
+
 	@Override
 	void save(Seat seat);
 
 	@Override
 	void deleteById(Long id);
-
+	
 }

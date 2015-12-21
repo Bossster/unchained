@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.unchained.springmvc.dao.BusDao;
+import com.unchained.springmvc.dao.SeatDao;
 import com.unchained.springmvc.dao.TripDao;
 import com.unchained.springmvc.model.Bus;
+import com.unchained.springmvc.model.Seat;
 import com.unchained.springmvc.model.Trip;
 import com.unchained.springmvc.model.TripFilter;
 
@@ -23,6 +25,9 @@ public class TripServiceImpl implements TripService {
 
 	@Autowired
 	BusDao busDao;
+
+	@Autowired
+	SeatDao seatDao;
 
 	@Override
 	public Trip findTripById(Long id) throws Exception {
@@ -77,6 +82,15 @@ public class TripServiceImpl implements TripService {
 	@Override
 	public void deleteTripById(Long id) throws Exception {
 		tripDao.deleteById(id);
+	}
+
+	@Override
+	public Integer getAvailableSeats(String tripId) throws Exception {
+		List<Seat> seats = seatDao.findAllByTripId(tripId);
+		if (seats != null) {
+			return seats.size();
+		}
+		return null;
 	}
 
 }

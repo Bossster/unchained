@@ -38,7 +38,7 @@ public class Reservation implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date reservationDate;
 
-	@Column(name = "RESERVATION_ID", length = 20, unique = true, nullable = false)
+	@Column(name = "RESERVATION_ID", length = 60, unique = true, nullable = false)
 	private String reservationId;
 
 	@Column(name = "TRIP_ID", length = 20, nullable = false)

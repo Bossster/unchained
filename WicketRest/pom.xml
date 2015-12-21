@@ -126,6 +126,14 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
+		<!-- MOXY -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.moxy</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+
+
 		<!-- TESTING -->
 		<dependency>
 			<groupId>junit</groupId>
